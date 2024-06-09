@@ -5,9 +5,9 @@ class Wall {
     width: number;
     height: number; 
     color: string;
-    measurements ?: number[][];
+    measurements : number[][];
 
-    constructor(width: number, height:number, color:string, measurements?:number[][]){
+    constructor(width: number, height:number, color:string, measurements:number[][]){
         this.width = width;
         this.height = height;
         this.color = color;
@@ -23,18 +23,26 @@ class Wall {
     }
 
     describe(){
+        let finalArea = this.getFinalisedArea(this.width, this.height, this.measurements)
         console.log(`This wall has length ${this.width} and height ${this.height}, with color ${this.color}`)
+        console.log(`The amount of focused area is ${finalArea}`)
     }
 
-    getFinalisedArea(objectsArea:number, totalArea:number): number{
+    getFinalisedArea(width:number, height: number, measurements: number[][]): number{
+        let totalArea = this.calcArea(width, height);
+        let objectsArea = this.getTotalObjectsArea(measurements);
         return totalArea - objectsArea;
     }
 
-    getTotalObjectsArea(measurements:number[][]): number {
+    private getTotalObjectsArea(measurements:number[][]): number {
         let totalArea: number = 0;
-        for (var pair in measurements) {
-            let temp = this.calcArea(pair[0],pair[1]);
-            totalArea += temp;
+        console.log(measurements)
+        if (measurements.length > 0) {
+            for (const pair of measurements) {
+                let temp = this.calcArea(pair[0], pair[1]);
+                totalArea += temp;
+        }
+        
         }
         return totalArea;
     }
@@ -42,9 +50,14 @@ class Wall {
 }
 
 
-let measurements : number[][] = [[]];
+let measurements : number[][] = [];
 
 const wallInfo = await inquirer.prompt([
+    {
+        type: 'string',
+        name: 'color',
+        message: 'What color would you like this wall to be?'
+    },
     {
         type: 'number',
         name: 'length',

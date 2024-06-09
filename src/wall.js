@@ -17,11 +17,34 @@ class Wall {
         return this.color;
     }
     describe() {
-        console.log(`This wall has length ${this.width} and height ${this.height}, with color ${this.color} and has these measurements ${this.measurements}`);
+        let finalArea = this.getFinalisedArea(this.width, this.height, this.measurements);
+        console.log(`This wall has length ${this.width} and height ${this.height}, with color ${this.color}`);
+        console.log(`The amount of focused area is ${finalArea}`);
+    }
+    getFinalisedArea(width, height, measurements) {
+        let totalArea = this.calcArea(width, height);
+        let objectsArea = this.getTotalObjectsArea(measurements);
+        return totalArea - objectsArea;
+    }
+    getTotalObjectsArea(measurements) {
+        let totalArea = 0;
+        console.log(measurements);
+        if (measurements.length > 0) {
+            for (const pair of measurements) {
+                let temp = this.calcArea(pair[0], pair[1]);
+                totalArea += temp;
+            }
+        }
+        return totalArea;
     }
 }
-let measurements = [[]];
+let measurements = [];
 const wallInfo = await inquirer.prompt([
+    {
+        type: 'string',
+        name: 'color',
+        message: 'What color would you like this wall to be?'
+    },
     {
         type: 'number',
         name: 'length',
@@ -35,7 +58,7 @@ const wallInfo = await inquirer.prompt([
     {
         type: 'number',
         name: 'numOfObjects',
-        message: 'Do you have any removable objects on the wall? E.g.Doors, windows, tiles etc.'
+        message: 'Do you have any removable objects on the wall (E.g.Doors, windows, tiles etc.?If so how many? '
     }
 ]);
 let height = wallInfo.length;
@@ -62,21 +85,23 @@ while (counter > 0) {
 }
 let wall = new Wall(width, height, color, measurements);
 wall.describe();
-/*
-
 class Room {
-    name: string;
-    walls: [Wall];
-    
-
-    constructor(name: string, walls: [Wall]){
+    name;
+    walls;
+    constructor(name, walls) {
         this.name = name;
         this.walls = walls;
     }
-
-
+    addWall(wall) {
+        this.walls.push(wall);
+    }
 }
-
+/**
+ * TO-DO:
+ * - Make a function that adds a value onto a given color variable
+ * - create an outer function that makes a list of all colors involved in the wall objects
+ */
+/*
 class Invoice {
     name: string;
     budget: number;
