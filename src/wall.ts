@@ -14,7 +14,7 @@ class Wall {
         this.measurements = measurements;
     }
 
-    calcArea(width:number, height:number){
+    private calcArea(width:number, height:number){
         return width * height;
     }
 
@@ -28,6 +28,15 @@ class Wall {
 
     getFinalisedArea(objectsArea:number, totalArea:number): number{
         return totalArea - objectsArea;
+    }
+
+    getTotalObjectsArea(measurements:number[][]): number {
+        let totalArea: number = 0;
+        for (var pair in measurements) {
+            let temp = this.calcArea(pair[0],pair[1]);
+            totalArea += temp;
+        }
+        return totalArea;
     }
 
 }
