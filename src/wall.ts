@@ -51,6 +51,11 @@ class Wall {
 
 }
 
+interface PaintNeeded {
+    color: string;
+    totalArea: number;
+}
+
 class Room {
     name: string;
     walls: Wall[];
@@ -70,7 +75,32 @@ class Room {
             }
         }
         return colorList
+    }
 
+    getPaintNeeded():PaintNeeded[] {
+        let paintNeededList: PaintNeeded[] = []
+        let colorList:string[] = this.getColorsNeeded();
+        for (let i=0; i<colorList.length; i++) {
+            let tempColor: string = colorList[i];
+            let temp: PaintNeeded = {color:tempColor, totalArea:0};
+            paintNeededList.push(temp)
+        }
+        return paintNeededList;
+    }
+
+
+
+}
+
+class User {
+    name:string;
+    budget: number;
+    rooms: Room[];
+
+    constructor(name:string, budget: number, rooms: Room[]){
+        this.name = name;
+        this.budget = budget;
+        this.rooms = rooms;
     }
 
 
@@ -153,54 +183,3 @@ for (let i=0; i < numOfWalls; i++) {
 
 let room:Room = new Room(roomName, walls);
 
-
-
-
-interface PaintNeeded {
-    color: string,
-    totalArea : number
-}
-
-
-
-
-
-/**
- * TO-DO:
- * - Make a function that adds a value onto a given color variable
- * - create an outer function that makes a list of all colors involved in the wall objects
- */
-
-
-/*
-class Invoice {
-    name: string;
-    budget: number;
-    rooms: [Room];
-
-    constructor(name:string, budget:number, rooms:[Room]){
-        this.name = name;
-        this.budget = budget;
-        this.rooms = rooms;
-    }
-
-    getColor(rooms:[Room]): string[] {
-        let colors:string[0];
-        for (let i=0;i<9;i){
-            let room = rooms[i];
-            for (let j=0)
-        }
-    }
-
-    createArrayData(){
-        interface colorArea {
-            color: string,
-            totalArea: number
-        }
-
-    }
-    
-
-
-}
-*/
