@@ -3,7 +3,7 @@ import inquirer from 'inquirer';
 
 class Wall {
     width: number;
-    height: number;
+    height: number; 
     color: string;
     measurements ?: number[][];
 
@@ -24,6 +24,10 @@ class Wall {
 
     describe(){
         console.log(`This wall has length ${this.width} and height ${this.height}, with color ${this.color}`)
+    }
+
+    getFinalisedArea(objectsArea:number, totalArea:number): number{
+        return totalArea - objectsArea;
     }
 
 }
@@ -81,6 +85,7 @@ wall.describe();
 
 
 
+
 class Room {
     name: string;
     walls: [Wall];
@@ -91,21 +96,29 @@ class Room {
         this.walls = walls;
     }
 
-    getColorList(walls: [Wall]): [string] {
-        let color_list: [string] = [];
-        for (var wall in walls){
-            let color = wall.getColor();
-            color_list.push(color);
-        }
-        return color_list; 
+    addWall(wall: Wall):void{
+        this.walls.push(wall);
     }
+
+
+}
+
+
+interface PaintNeeded {
+    color: string,
+    totalArea : number
+}
+
+
+
+
 
 /**
  * TO-DO:
  * - Make a function that adds a value onto a given color variable
  * - create an outer function that makes a list of all colors involved in the wall objects
  */
-}
+
 
 /*
 class Invoice {
