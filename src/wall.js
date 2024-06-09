@@ -1,36 +1,26 @@
 import inquirer from 'inquirer';
-
-
 class Wall {
-    width: number;
-    height: number;
-    color: string;
-    measurements ?: number[][];
-
-    constructor(width: number, height:number, color:string, measurements?:number[][]){
+    width;
+    height;
+    color;
+    measurements;
+    constructor(width, height, color, measurements) {
         this.width = width;
         this.height = height;
         this.color = color;
         this.measurements = measurements;
     }
-
-    calcArea(width:number, height:number){
+    calcArea(width, height) {
         return width * height;
     }
-
-    getColor(): string{
+    getColor() {
         return this.color;
     }
-
-    describe(){
-        console.log(`This wall has length ${this.width} and height ${this.height}, with color ${this.color}`)
+    describe() {
+        console.log(`This wall has length ${this.width} and height ${this.height}, with color ${this.color} and has these measurements ${this.measurements}`);
     }
-
 }
-
-
-let measurements : number[][] = [[]];
-
+let measurements = [[]];
 const wallInfo = await inquirer.prompt([
     {
         type: 'number',
@@ -40,23 +30,20 @@ const wallInfo = await inquirer.prompt([
     {
         type: 'number',
         name: 'width',
-        message: 'Type in the width of your wall: ' 
+        message: 'Type in the width of your wall: '
     },
     {
         type: 'number',
         name: 'numOfObjects',
-        message: 'Do you have any removable objects on the wall (E.g.Doors, windows, tiles etc.?If so how many? '
+        message: 'Do you have any removable objects on the wall? E.g.Doors, windows, tiles etc.'
     }
-])
-
-let height:number = wallInfo.length;
-let width:number = wallInfo.width;
-let color:string = wallInfo.color;
-
-let numOfObjects:number = wallInfo.numOfObjects;
-let counter: number = numOfObjects;
-while (counter > 0){
- 
+]);
+let height = wallInfo.length;
+let width = wallInfo.width;
+let color = wallInfo.color;
+let numOfObjects = wallInfo.numOfObjects;
+let counter = numOfObjects;
+while (counter > 0) {
     const extraMeasurementInfo = await inquirer.prompt([
         {
             type: 'number',
@@ -68,18 +55,14 @@ while (counter > 0){
             name: 'width',
             message: 'Width of object: '
         }
-    ])
-    
-    let measurementPair : number[] = [extraMeasurementInfo.height, extraMeasurementInfo.width];
+    ]);
+    let measurementPair = [extraMeasurementInfo.height, extraMeasurementInfo.width];
     measurements.push(measurementPair);
     counter -= 1;
 }
-
-let wall: Wall = new Wall(width, height, color, measurements)
+let wall = new Wall(width, height, color, measurements);
 wall.describe();
-
-
-
+/*
 
 class Room {
     name: string;
@@ -91,23 +74,9 @@ class Room {
         this.walls = walls;
     }
 
-    getColorList(walls: [Wall]): [string] {
-        let color_list: [string] = [];
-        for (var wall in walls){
-            let color = wall.getColor();
-            color_list.push(color);
-        }
-        return color_list; 
-    }
 
-/**
- * TO-DO:
- * - Make a function that adds a value onto a given color variable
- * - create an outer function that makes a list of all colors involved in the wall objects
- */
 }
 
-/*
 class Invoice {
     name: string;
     budget: number;
@@ -138,4 +107,4 @@ class Invoice {
 
 
 }
-*/
+*/ 

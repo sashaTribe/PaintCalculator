@@ -19,6 +19,13 @@ let numOfRooms = answer.numOfRooms;
 
 console.log("Your name is " + answer.name + " and you have " + answer.numOfRooms + ".");
 */
+const howManyRooms = await inquirer.prompt([
+    {
+        type: 'number',
+        name: 'length',
+        message: 'How many rooms do you have?'
+    }
+]);
 const answer2 = await inquirer.prompt([
     {
         type: 'number',
@@ -36,6 +43,7 @@ let width = answer2.width;
 let length = answer2.length;
 //let totalArea:number = 0
 let area;
+let areas;
 let findArea = (x, y) => x * y;
 area = findArea(length, width);
 console.log(`The area of your wall is ${area}`);
