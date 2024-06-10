@@ -61,6 +61,7 @@ class Wall {
 interface PaintNeeded {
     color: string;
     totalArea: number;
+
 }
 
 class Room {
@@ -175,25 +176,12 @@ class User {
      * @param paintlist 
      * @returns 
      */
-    finalisePaintMeasurements(paintlist:PaintNeeded[]): PaintNeeded[] {
+    finalisePaintMeasurements(): PaintNeeded[] {
         let finalPaintList: PaintNeeded[] = [];
         let longPaintList = this.getAllPaintNeededLists();
         let colorNeeded = new Set<string>();
-        for(let i=0; i<longPaintList.length;i++) {
-            colorNeeded.add(longPaintList[i].color);
-        }
-        for (var color of colorNeeded) {
-            let tempObj: PaintNeeded = {color:color, totalArea:0};
-            finalPaintList.push(tempObj);
-        }
-
-        for(let i=0; i<longPaintList.length;i++) {
-            for (let j=0; j<finalPaintList.length; j++){
-                if(longPaintList[i].color == finalPaintList[j].color){
-                    finalPaintList[j].totalArea += longPaintList[i].totalArea;
-                }
-            }
-        }
+        colorNeeded = this.createColorSet(longPaintList);
+        finalPaintList = this.addTotalAreaToList(longPaintList,this.addPaintObjects(colorNeeded));
         return finalPaintList;
     }
 
@@ -276,3 +264,22 @@ for (let i=0; i < numOfWalls; i++) {
 
 let room:Room = new Room(roomName, walls);
 
+class Paint{
+    brandName: string;
+    litreList:number[];
+    priceList:number[];
+    coveragePerLitre:number;
+
+    constructor(brandName:string, litreList:number[], priceList:number[], coveragePerLitre:number){
+        this.brandName = brandName;
+        this.litreList = litreList;
+        this.priceList = priceList;
+        this.coveragePerLitre = coveragePerLitre;
+    }
+
+    function calcPaintAmount(totalArea:number, coverageAmount:number): number{
+        return (totalArea/coverageAmount) * 2;
+    }
+    
+    
+}
