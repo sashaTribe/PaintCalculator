@@ -277,9 +277,62 @@ class Paint{
         this.coveragePerLitre = coveragePerLitre;
     }
 
-    function calcPaintAmount(totalArea:number, coverageAmount:number): number{
-        return (totalArea/coverageAmount) * 2;
+    calcPaintAmount(totalArea:number): number{
+        return (totalArea/this.coveragePerLitre) * 2;
+    }
+    
+    numberOfPaintTinsNeeded(totalLitreNeeded:number, givenLitreValue:number):number{
+        let total:number = 0;
+        while (totalLitreNeeded > 0){
+            totalLitreNeeded -= givenLitreValue;
+            total+=1
+        }
+        return total
+    }
+
+    multiplePaintTinsNeeded(totalLitreNeeded:number, litreList:number[]): number[]{
+        let sortedList:number[] = litreList.sort((a,b) => b-a);
+        let biggestNum: number = sortedList[0];
+        let total1:number = 0;
+        let total2:number = 0;
+        while (totalLitreNeeded > 0){
+            while (totalLitreNeeded > biggestNum){
+                totalLitreNeeded -= biggestNum;
+                total1 += 1;
+            }
+            totalLitreNeeded -= sortedList[1];
+            total2 += 1
+        }
+        return [total1, total2]
+
+    }
+    costOfPaint(numOfPaintNeeded:number, price:number):number{
+        return numOfPaintNeeded * price;
+    }
+
+    getMinimalCost(totalArea:number): number{
+        let numOflitresNeeded = this.calcPaintAmount(totalArea);
+        let maxLitre:number = Math.max(...this.litreList);
+        let numLargePaintTinNeeded = this.numberOfPaintTinsNeeded(numOflitresNeeded, maxLitre);
+        let largePaintTinPrice = Math.max(...this.priceList)
+        let costLargePaintBundle = this.costOfPaint(numLargePaintTinNeeded,largePaintTinPrice);
+    
+
+    }
+
+    private sumArray(arrNumbers:number[]):number{
+        let total:number = 0;
+        for (let i=0; i < arrNumbers.length; i++){
+            total += arrNumbers[i]
+        }
+        return total
     }
     
     
 }
+
+let fb = new Paint("Farrow and Ball", [2.5,5], [78,128], 12);
+let dulux = new Paint("Dulux", [2.5], [25.32], 16);
+let crown = new Paint("Crown", [1,5],[24.97,71.34], 16);
+let littleGreene = new Paint("Little Greene", [1,2.5], [39, 80], 14)
+let graphen = new Paint("Graphenstone", [1, 10], [33,279], 18);
