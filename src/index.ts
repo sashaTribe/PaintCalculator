@@ -112,11 +112,33 @@ let user:User = new User(userName, userBudget, rooms)
 
 
 
+let fbPriceList: {[key:string]:number} = {
+    '2.5L':78,
+    '5L':128
+}
 
+let duluxPriceList: {[key:string]:number} = {
+    '2.5L':25.32
+}
 
+let crownPriceList: {[key:string]:number} = {
+    '1L':24.97,
+    '5L':71.34
+}
 
-let fb = new Paint("Farrow and Ball", [2.5,5], [78,128], 12);
-let dulux = new Paint("Dulux", [2.5], [25.32], 16);
-let crown = new Paint("Crown", [1,5],[24.97,71.34], 16);
-let littleGreene = new Paint("Little Greene", [1,2.5], [39, 80], 14)
-let graphen = new Paint("Graphenstone", [1, 10], [33,279], 18);
+let littleGreenePriceList: {[key:string]:number} = {
+    '1L':39,
+    '2.5L':80
+}
+
+let graphenPriceList: {[key:number]:number} = {
+    1:33,
+    10:279
+}
+                   
+
+let fb = new Paint("Farrow and Ball", fbPriceList, 12);
+let dulux = new Paint("Dulux", duluxPriceList, 16);
+let crown = new Paint("Crown", crownPriceList, 16);
+let littleGreene = new Paint("Little Greene", littleGreenePriceList, 14)
+let graphen = new Paint("Graphenstone", graphenPriceList, 18);

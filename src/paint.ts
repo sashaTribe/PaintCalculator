@@ -1,13 +1,16 @@
+
 export class Paint{
     brandName: string;
-    litreList:number[];
-    priceList:number[];
+    litrePriceList: {[key:string]:number};
+    //litreList:number[];
+    //priceList:number[];
     coveragePerLitre:number;
 
-    constructor(brandName:string, litreList:number[], priceList:number[], coveragePerLitre:number){
+    constructor(brandName:string, litrePriceList:{[key:string]:number}, coveragePerLitre:number){
         this.brandName = brandName;
-        this.litreList = litreList;
-        this.priceList = priceList;
+        this.litrePriceList = litrePriceList;
+        //this.litreList = litreList;
+        //this.priceList = priceList;
         this.coveragePerLitre = coveragePerLitre;
     }
 

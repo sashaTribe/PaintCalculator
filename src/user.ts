@@ -52,11 +52,7 @@ export class User {
         return finalPaintList;
     }
 
-    /**
-     * 
-     * @param paintlist 
-     * @returns 
-     */
+    
     finalisePaintMeasurements(): PaintNeeded[] {
         let finalPaintList: PaintNeeded[] = [];
         let longPaintList = this.getAllPaintNeededLists();
@@ -64,6 +60,16 @@ export class User {
         colorNeeded = this.createColorSet(longPaintList);
         finalPaintList = this.addTotalAreaToList(longPaintList,this.addPaintObjects(colorNeeded));
         return finalPaintList;
+    }
+
+    describe(){
+        let userPaint:PaintNeeded[] = this.finalisePaintMeasurements();
+        console.log(`${this.name} wants to paint ${this.rooms.length} rooms in their place.`)
+        console.log(`${this.name} has a budget of ${this.budget}.`)
+        console.log(`${this.name} wants to paint: `)
+        for (var room of this.rooms){
+            console.log(`${room.name} `)
+        }
     }
 
 }
