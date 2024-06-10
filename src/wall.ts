@@ -1,6 +1,13 @@
 import inquirer from 'inquirer';
 
 /**
+ * TO-DO:
+ *  - break down getPaintNeeded method
+ *  - make a getPaintNeeded method for User class (same thing but for all rooms not just all walls)
+ *  - Create paint data 
+ */
+
+/**
  * This section is the Wall layer
  */
 class Wall {
@@ -25,14 +32,14 @@ class Wall {
     }
 
     describe(){
-        let finalArea = this.getFinalisedArea(this.width, this.height, this.measurements)
+        let finalArea = this.getFinalisedArea()
         console.log(`This wall has length ${this.width} and height ${this.height}, with color ${this.color}`)
         console.log(`The amount of focused area is ${finalArea}`)
     }
 
-    getFinalisedArea(width:number, height: number, measurements: number[][]): number{
-        let totalArea = this.calcArea(width, height);
-        let objectsArea = this.getTotalObjectsArea(measurements);
+    getFinalisedArea(): number{
+        let totalArea = this.calcArea(this.width, this.height);
+        let objectsArea = this.getTotalObjectsArea(this.measurements);
         return totalArea - objectsArea;
     }
 
@@ -84,6 +91,15 @@ class Room {
             let tempColor: string = colorList[i];
             let temp: PaintNeeded = {color:tempColor, totalArea:0};
             paintNeededList.push(temp)
+        }
+        for (var wall of this.walls){
+            let tempColor:string = wall.getColor()
+            let tempArea:number = wall.getFinalisedArea()
+            for(let i=0; i<paintNeededList.length; i++){
+                if (paintNeededList[i].color == tempColor){
+                    paintNeededList[i].totalArea += tempArea;
+                }
+            }
         }
         return paintNeededList;
     }
