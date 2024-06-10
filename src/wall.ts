@@ -84,15 +84,19 @@ class Room {
         return colorList
     }
 
-    getPaintNeeded():PaintNeeded[] {
+    getUniqueColors(colorList:string[]):PaintNeeded[] {
         let paintNeededList: PaintNeeded[] = []
-        let colorList:string[] = this.getColorsNeeded();
         for (let i=0; i<colorList.length; i++) {
             let tempColor: string = colorList[i];
             let temp: PaintNeeded = {color:tempColor, totalArea:0};
             paintNeededList.push(temp)
         }
-        for (var wall of this.walls){
+        return paintNeededList;
+        
+    }
+
+    addAreaToColor(wallList:Wall[], paintNeededList:PaintNeeded[]):PaintNeeded[] {
+        for (var wall of wallList){
             let tempColor:string = wall.getColor()
             let tempArea:number = wall.getFinalisedArea()
             for(let i=0; i<paintNeededList.length; i++){
@@ -101,6 +105,12 @@ class Room {
                 }
             }
         }
+        return paintNeededList;
+    }
+
+    getPaintNeeded():PaintNeeded[] {
+        let colorList  = this.getColorsNeeded();
+        let paintNeededList:PaintNeeded[] = this.addAreaToColor(this.walls, this.getUniqueColors(colorList));
         return paintNeededList;
     }
 
