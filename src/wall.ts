@@ -10,7 +10,7 @@ import inquirer from 'inquirer';
 /**
  * This section is the Wall layer
  */
-class Wall {
+export class Wall {
     width: number;
     height: number; 
     color: string;
@@ -58,134 +58,33 @@ class Wall {
 
 }
 
-interface PaintNeeded {
+export interface PaintNeeded {
     color: string;
     totalArea: number;
 
 }
 
-class Room {
-    name: string;
-    walls: Wall[];
-    
 
-    constructor(name: string, walls: Wall[]){
-        this.name = name;
-        this.walls = walls;
+
+
+
+const quoteInfo = await inquirer.prompt([
+    {
+        type: 'string',
+        name: "userName",
+        message: "What is your name?"
+    },
+    {
+        type: 'number',
+        name: 'numOfRooms',
+        message: 'How many rooms will you be painting?'
+    },
+    {
+        type:'number',
+        name:'budget',
+        message: 'What is your budget?'
     }
-
-    getColorsNeeded():string[] {
-        let colorList:string[] = []
-        for (var wall of walls){
-            let temp_color:string = wall.getColor()
-            if(!colorList.includes(temp_color)){
-                colorList.push(temp_color)
-            }
-        }
-        return colorList
-    }
-
-    getUniqueColors(colorList:string[]):PaintNeeded[] {
-        let paintNeededList: PaintNeeded[] = []
-        for (let i=0; i<colorList.length; i++) {
-            let tempColor: string = colorList[i];
-            let temp: PaintNeeded = {color:tempColor, totalArea:0};
-            paintNeededList.push(temp)
-        }
-        return paintNeededList;
-        
-    }
-
-    addAreaToColor(wallList:Wall[], paintNeededList:PaintNeeded[]):PaintNeeded[] {
-        for (var wall of wallList){
-            let tempColor:string = wall.getColor()
-            let tempArea:number = wall.getFinalisedArea()
-            for(let i=0; i<paintNeededList.length; i++){
-                if (paintNeededList[i].color == tempColor){
-                    paintNeededList[i].totalArea += tempArea;
-                }
-            }
-        }
-        return paintNeededList;
-    }
-
-    getPaintNeeded():PaintNeeded[] {
-        let colorList  = this.getColorsNeeded();
-        let paintNeededList:PaintNeeded[] = this.addAreaToColor(this.walls, this.getUniqueColors(colorList));
-        return paintNeededList;
-    }
-
-
-
-}
-
-class User {
-    name:string;
-    budget: number;
-    rooms: Room[];
-
-    constructor(name:string, budget: number, rooms: Room[]){
-        this.name = name;
-        this.budget = budget;
-        this.rooms = rooms;
-    }
-
-    getAllPaintNeededLists():PaintNeeded[]{
-        let paintNeededList: PaintNeeded[] = []
-        let roomList:Room[] = this.rooms;
-        for(var room of roomList) {
-            let temp = room.getPaintNeeded();
-            for(let i=0; i < temp.length; i++) {
-                paintNeededList.push(temp[i]);
-            }
-        }
-        return paintNeededList;
-
-    }
-
-    createColorSet(paintList:PaintNeeded[]): Set<string>{
-        let colorNeeded = new Set<string>();
-        for(let i=0; i<paintList.length;i++) {
-            colorNeeded.add(paintList[i].color);
-        }
-        return colorNeeded;
-    }
-
-    addPaintObjects(colorNeeded:Set<string>):PaintNeeded[]{
-        let finalPaintList:PaintNeeded[] = []
-        for (var color of colorNeeded) {
-            let tempObj: PaintNeeded = {color:color, totalArea:0};
-            finalPaintList.push(tempObj);
-        }
-        return finalPaintList;
-    }
-
-    addTotalAreaToList(originalPaintList:PaintNeeded[], finalPaintList:PaintNeeded[]):PaintNeeded[]{
-        for(let i=0; i<originalPaintList.length;i++) {
-            for (let j=0; j<finalPaintList.length; j++){
-                if(originalPaintList[i].color == finalPaintList[j].color){
-                    finalPaintList[j].totalArea += originalPaintList[i].totalArea;
-                }
-            }
-        }
-        return finalPaintList;
-    }
-
-    /**
-     * 
-     * @param paintlist 
-     * @returns 
-     */
-    finalisePaintMeasurements(): PaintNeeded[] {
-        let finalPaintList: PaintNeeded[] = [];
-        let longPaintList = this.getAllPaintNeededLists();
-        let colorNeeded = new Set<string>();
-        colorNeeded = this.createColorSet(longPaintList);
-        finalPaintList = this.addTotalAreaToList(longPaintList,this.addPaintObjects(colorNeeded));
-        return finalPaintList;
-    }
-
-}
+])
 
 const roomInfo = await inquirer.prompt([
     {
@@ -264,72 +163,7 @@ for (let i=0; i < numOfWalls; i++) {
 
 let room:Room = new Room(roomName, walls);
 
-class Paint{
-    brandName: string;
-    litreList:number[];
-    priceList:number[];
-    coveragePerLitre:number;
 
-    constructor(brandName:string, litreList:number[], priceList:number[], coveragePerLitre:number){
-        this.brandName = brandName;
-        this.litreList = litreList;
-        this.priceList = priceList;
-        this.coveragePerLitre = coveragePerLitre;
-    }
-
-    calcPaintAmount(totalArea:number): number{
-        return (totalArea/this.coveragePerLitre) * 2;
-    }
-    
-    numberOfPaintTinsNeeded(totalLitreNeeded:number, givenLitreValue:number):number{
-        let total:number = 0;
-        while (totalLitreNeeded > 0){
-            totalLitreNeeded -= givenLitreValue;
-            total+=1
-        }
-        return total
-    }
-
-    multiplePaintTinsNeeded(totalLitreNeeded:number, litreList:number[]): number[]{
-        let sortedList:number[] = litreList.sort((a,b) => b-a);
-        let biggestNum: number = sortedList[0];
-        let total1:number = 0;
-        let total2:number = 0;
-        while (totalLitreNeeded > 0){
-            while (totalLitreNeeded > biggestNum){
-                totalLitreNeeded -= biggestNum;
-                total1 += 1;
-            }
-            totalLitreNeeded -= sortedList[1];
-            total2 += 1
-        }
-        return [total1, total2]
-
-    }
-    costOfPaint(numOfPaintNeeded:number, price:number):number{
-        return numOfPaintNeeded * price;
-    }
-
-    getMinimalCost(totalArea:number): number{
-        let numOflitresNeeded = this.calcPaintAmount(totalArea);
-        let maxLitre:number = Math.max(...this.litreList);
-        let numLargePaintTinNeeded = this.numberOfPaintTinsNeeded(numOflitresNeeded, maxLitre);
-        let largePaintTinPrice = Math.max(...this.priceList)
-        let costLargePaintBundle = this.costOfPaint(numLargePaintTinNeeded,largePaintTinPrice);
-    
-
-    }
-
-    private sumArray(arrNumbers:number[]):number{
-        let total:number = 0;
-        for (let i=0; i < arrNumbers.length; i++){
-            total += arrNumbers[i]
-        }
-        return total
-    }
-    
-    
-}
 
 let fb = new Paint("Farrow and Ball", [2.5,5], [78,128], 12);
 let dulux = new Paint("Dulux", [2.5], [25.32], 16);
