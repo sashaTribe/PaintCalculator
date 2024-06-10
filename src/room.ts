@@ -1,4 +1,4 @@
-import {Wall,PaintNeeded} from './wall.ts';
+import {Wall,PaintNeeded} from './wall';
 
 export class Room {
     name: string;

@@ -1,24 +1,52 @@
 import inquirer from 'inquirer';
-import {Wall} from './wall.ts';
-import {Room} from './room.ts';
-import {Paint} from './paint.ts';
-import {User} from './user.ts';
+import {Wall} from './wall.js';
+import {Room} from './room.js';
+import {Paint} from './paint.js';
+import {User} from './user.js';
+
+
+const confirmNameAnswerValidator = async (input:any) => {
+    if (input == '' || typeof input != "string"){
+        return "Please enter a valid name.";
+    }
+    return true;
+}
+
+const confirmIntegerNumberValidator = async (input:any) => {
+    if (input < 0 || !Number.isInteger(input)){
+        return "Please enter a valid integer value."
+    }
+    return true;
+}
+
+const confirmNumberValidator = async (input:any) => {
+    if (input < 0 || typeof input == "number"){
+        return "Please enter a valid, positive value."
+    }
+    return true;
+}
+
+    
 
 const quoteInfo = await inquirer.prompt([
     {
         type: 'string',
         name: "userName",
-        message: "What is your name?"
+        message: "What is your name?",
+        validate: confirmNameAnswerValidator
+            
     },
     {
         type: 'number',
         name: 'numOfRooms',
-        message: 'How many rooms will you be painting?'
+        message: 'How many rooms will you be painting?',
+        validate:confirmIntegerNumberValidator
     },
     {
         type:'number',
         name:'budget',
-        message: 'What is your budget?'
+        message: 'What is your budget?',
+        validate: confirmNumberValidator
     }
 ])
 
@@ -33,13 +61,15 @@ for(let j=0; j<numOfRooms;j++){
         {
             type: 'string',
             name: 'roomName',
-            message: 'What is the name of this room?'
+            message: 'What is the name of this room?',
+            validate: confirmNameAnswerValidator
         },
     
         {
             type: 'number',
             name: 'numOfWalls',
-            message: 'How many walls are in this room?'
+            message: 'How many walls are in this room?',
+            validate: confirmIntegerNumberValidator
         },
     
     ])
@@ -53,24 +83,28 @@ for(let j=0; j<numOfRooms;j++){
     
             const wallInfo = await inquirer.prompt([
                 {
-                    type: 'string',
+                    type: 'checkbox',
                     name: 'color',
-                    message: 'What color would you like this wall to be?'
+                    message: `What color would you like wall ${i+1} to be?`,
+                    choices: ['red', 'yellow', 'orange', 'pink','blue','white','black','purple','green','brown']
                 },
                 {
                     type: 'number',
                     name: 'length',
-                    message: 'Type in the length of your wall: '
+                    message: 'Type in the length of your wall: ',
+                    validate: confirmNumberValidator
                 },
                 {
                     type: 'number',
                     name: 'width',
-                    message: 'Type in the width of your wall: ' 
+                    message: 'Type in the width of your wall: ',
+                    validate: confirmNumberValidator
                 },
                 {
                     type: 'number',
                     name: 'numOfObjects',
-                    message: 'Do you have any removable objects on the wall (E.g.Doors, windows, tiles etc.?If so how many? '
+                    message: 'How many removable objects do you have (E.g.Doors, windows, tiles etc.)? ',
+                    validate: confirmIntegerNumberValidator
                 }
             ])
     
@@ -86,12 +120,14 @@ for(let j=0; j<numOfRooms;j++){
                     {
                         type: 'number',
                         name: 'height',
-                        message: 'Height of object: '
+                        message: 'Height of object: ',
+                        validate:confirmNumberValidator
                     },
                     {
                         type: 'number',
                         name: 'width',
-                        message: 'Width of object: '
+                        message: 'Width of object: ',
+                        validate: confirmNumberValidator
                     }
                 ])
                 
@@ -108,7 +144,7 @@ for(let j=0; j<numOfRooms;j++){
 }
 
 let user:User = new User(userName, userBudget, rooms)
-
+user.describe();
 
 
 

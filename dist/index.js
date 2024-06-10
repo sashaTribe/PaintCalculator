@@ -1,8 +1,8 @@
 import inquirer from 'inquirer';
-import { Wall } from './wall.js';
-import { Room } from './room.js';
-import { Paint } from './paint.js';
-import { User } from './user.js';
+import { Wall } from './wall';
+import { Room } from './room';
+import { Paint } from './paint';
+import { User } from './user';
 const quoteInfo = await inquirer.prompt([
     {
         type: 'string',
@@ -93,7 +93,6 @@ for (let j = 0; j < numOfRooms; j++) {
     rooms.push(room);
 }
 let user = new User(userName, userBudget, rooms);
-user.describe();
 let fbPriceList = {
     '2.5L': 78,
     '5L': 128

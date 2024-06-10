@@ -1,5 +1,5 @@
-import {PaintNeeded} from './wall.ts'
-import {Room} from './room.ts'
+import {PaintNeeded} from './wall'
+import {Room} from './room'
 export class User {
     name:string;
     budget: number;
@@ -65,10 +65,10 @@ export class User {
     describe(){
         let userPaint:PaintNeeded[] = this.finalisePaintMeasurements();
         console.log(`${this.name} wants to paint ${this.rooms.length} rooms in their place.`)
-        console.log(`${this.name} has a budget of ${this.budget}.`)
+        console.log(`${this.name} has a budget of £${this.budget}.`)
         console.log(`${this.name} wants to paint: `)
         for (var room of this.rooms){
-            console.log(`${room.name} `)
+            console.log(`- ${room.name} `)
         }
     }
 
