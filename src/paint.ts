@@ -1,4 +1,4 @@
-class Paint{
+export class Paint{
     brandName: string;
     litreList:number[];
     priceList:number[];

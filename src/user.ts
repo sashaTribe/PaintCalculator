@@ -1,6 +1,6 @@
 import {PaintNeeded} from './wall.ts'
 import {Room} from './room.ts'
-class User {
+export class User {
     name:string;
     budget: number;
     rooms: Room[];
