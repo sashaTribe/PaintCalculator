@@ -1,21 +1,12 @@
-"use strict";
-/**
- * import { beforeEach } from 'node:test';
-import {calcArea, convertCm2toM2} from './wall'
-import * as wall from "./wall"
 //import {calcArea, convertCm2toM2} from 'Wall';
-describe('calcArea', () => {
-    it('Calculates area with height and width', () => {
-        expect(calcArea(300,400).toBe(120000))
+import { describe, expect, test } from '@jest/globals';
+const Wall = require("./wall");
+describe('Wall', () => {
+    const wall = new Wall();
+    test("calculates area", () => {
+        expect(wall.calcArea(300, 400).toBe(120000));
     });
-    
-});
-
-describe('convertCm2toM2', () => {
-    it('Converts cm2 to m2', () => {
-        expect(convertCm2toM2(12000)).toBe(12)
+    test("converting cm to m", () => {
+        expect(wall.convertCm2toM2(120000).toBe(12));
     });
 });
-
-
- */

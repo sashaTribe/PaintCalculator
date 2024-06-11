@@ -2,6 +2,7 @@
 //import {Wall} from './wall'
 import * as wall from "./wall"
 //import {calcArea, convertCm2toM2} from 'Wall';
+import {describe,expect,test} from '@jest/globals';
 
 const Wall = require("./wall")
 describe('Wall', () => {

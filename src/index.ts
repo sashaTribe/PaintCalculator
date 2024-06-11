@@ -49,7 +49,7 @@ const quoteInfo = await inquirer.prompt([
         type: 'string',
         name: "userName",
         message: "What is your name?",
-        nswerValidator
+        validate:confirmNameAnswerValidator
             
     },
     {
