@@ -106,13 +106,8 @@ export class User {
         console.log(`${this.name} wants to paint ${this.rooms.length} rooms in their place.`)
         console.log(`${this.name} has a budget of £${this.budget}.`)
         console.log(`${this.name} wants to paint: `)
-        for (var room of this.rooms){
-            console.log(`- ${room.name}`)
-            console.log(`Colors:`)
-            
-            for (var wall of room.getWalls()){
-                wall.describe()
-            }
+        for (var paint of userPaint){
+            console.log(`We need ${paint.color} that covers surface area of ${paint.totalArea}`)
         }
     }
 

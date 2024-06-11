@@ -1,12 +1,20 @@
-import { beforeEach } from 'node:test';
-import {Wall} from './wall'
+ import { beforeEach } from 'node:test';
+//import {Wall} from './wall'
+import * as wall from "./wall"
+//import {calcArea, convertCm2toM2} from 'Wall';
 
-describe('Wall', ()=>{
-    let wall:Wall;
+const Wall = require("./wall")
+describe('Wall', () => {
+    const wall = new Wall();
 
-    beforeEach(() => {
-        wall = new Wall(300,400,'pink', [[34,56], [67,89]]);
-    });
+    test("calculates area",() => {
+        expect(wall.calcArea(300,400).toBe(120000))
+    })
+    test("converting cm to m", () => {
+        expect(wall.convertCm2toM2(120000).toBe(12))
+    })
+    
+});
 
-    test()
-} )
+
+

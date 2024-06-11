@@ -18,23 +18,21 @@ export class Paint {
         return total;
     }
     multiplePaintTinsNeeded(totalLitreNeeded, litreList) {
+        // sorts in descending order
         let sortedList = litreList.sort((a, b) => b - a);
         let biggestNum = sortedList[0];
         let total1 = 0;
         let total2 = 0;
-        while (totalLitreNeeded > 0) {
-            while (totalLitreNeeded > biggestNum) {
-                totalLitreNeeded -= biggestNum;
-                total1 += 1;
-            }
-            totalLitreNeeded -= sortedList[1];
-            total2 += 1;
-        }
-        return [total1, total2];
+        total1 = this.numberOfPaintTinsNeeded(totalLitreNeeded,biggestNum)
+        let temp = totalLitreNeeded - (total1 * biggestNum);
+        total2 = this.numberOfPaintTinsNeeded(temp, sortedList[1])
+        return [total2,total1];
     }
+               
     costOfPaint(numOfPaintNeeded, price) {
         return numOfPaintNeeded * price;
     }
+
     /*
 
     getMinimalCost(totalArea:number): number{

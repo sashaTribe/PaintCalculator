@@ -54,7 +54,11 @@ export class Wall {
     getFinalisedArea(): number{
         let totalArea = this.calcArea(this.width, this.height);
         let objectsArea = this.getTotalObjectsArea(this.measurements);
-        return totalArea - objectsArea;
+        return this.convertCm2toM2(totalArea - objectsArea);
+    }
+
+    convertCm2toM2(areaIncm2:number):number {
+        return areaIncm2 / 10000;
     }
 
     /**
@@ -77,6 +81,8 @@ export class Wall {
     }
 
 }
+
+
 
 export interface PaintNeeded {
     color: string;
