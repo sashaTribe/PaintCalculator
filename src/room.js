@@ -39,4 +39,7 @@ export class Room {
         let paintNeededList = this.addAreaToColor(this.walls, this.getUniqueColors(colorList));
         return paintNeededList;
     }
+    getWalls() {
+        return this.walls;
+    }
 }

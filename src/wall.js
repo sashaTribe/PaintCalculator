@@ -1,12 +1,3 @@
-/**
- * TO-DO:
- *  - break down getPaintNeeded method
- *  - make a getPaintNeeded method for User class (same thing but for all rooms not just all walls)
- *  - Create paint data
- */
-/**
- * This section is the Wall layer
- */
 export class Wall {
     constructor(width, height, color, measurements) {
         this.width = width;

@@ -1,15 +1,28 @@
 import {Wall,PaintNeeded} from './wall';
 
 export class Room {
+    /**
+     * Stores information on the walls that needs to be painted in the room
+     */
     name: string;
+    // a collection of walls to be painted
     walls: Wall[];
     
 
+    /**
+     * initialises object
+     * @param name 
+     * @param walls 
+     */
     constructor(name: string, walls: Wall[]){
         this.name = name;
         this.walls = walls;
     }
 
+    /**
+     * Gets all colors needed for each wall to be painted
+     * @returns colorList:string[]
+     */
     getColorsNeeded():string[] {
         let colorList:string[] = []
         for (var wall of this.walls){
@@ -21,6 +34,11 @@ export class Room {
         return colorList
     }
 
+    /**
+     * Minimises colorList incase some walls will be painted with the same color
+     * @param colorList 
+     * @returns paintNeededList
+     */
     getUniqueColors(colorList:string[]):PaintNeeded[] {
         let paintNeededList: PaintNeeded[] = []
         for (let i=0; i<colorList.length; i++) {
@@ -32,6 +50,12 @@ export class Room {
         
     }
 
+    /**
+     * Assigns the area to each color
+     * @param wallList 
+     * @param paintNeededList 
+     * @returns paintNeededList, an array of paintNeeded objects
+     */
     addAreaToColor(wallList:Wall[], paintNeededList:PaintNeeded[]):PaintNeeded[] {
         for (var wall of wallList){
             let tempColor:string = wall.getColor()
@@ -45,10 +69,22 @@ export class Room {
         return paintNeededList;
     }
 
+    /**
+     * Method that finalises the paintNeeded list
+     * @returns PaintNeededList
+     */
     getPaintNeeded():PaintNeeded[] {
         let colorList  = this.getColorsNeeded();
         let paintNeededList:PaintNeeded[] = this.addAreaToColor(this.walls, this.getUniqueColors(colorList));
         return paintNeededList;
+    }
+    
+    /**
+     * returns list of walls of type Wall
+     * @returns wall list
+     */
+    getWalls():Wall[]{
+        return this.walls;
     }
 
 

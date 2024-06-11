@@ -51,10 +51,14 @@ export class User {
     describe() {
         let userPaint = this.finalisePaintMeasurements();
         console.log(`${this.name} wants to paint ${this.rooms.length} rooms in their place.`);
-        console.log(`${this.name} has a budget of ${this.budget}.`);
+        console.log(`${this.name} has a budget of £${this.budget}.`);
         console.log(`${this.name} wants to paint: `);
         for (var room of this.rooms) {
-            console.log(`${room.name} `);
+            console.log(`- ${room.name}`);
+            console.log(`Colors: ${room.walls}`);
+            for (var wall of room.getWalls()) {
+                wall.describe();
+            }
         }
     }
 }

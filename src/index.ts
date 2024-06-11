@@ -20,7 +20,7 @@ const confirmIntegerNumberValidator = async (input:any) => {
 }
 
 const confirmNumberValidator = async (input:any) => {
-    if (input < 0 || typeof input == "number"){
+    if (input < 0 || typeof input != "number"){
         return "Please enter a valid, positive value."
     }
     return true;
@@ -85,7 +85,7 @@ for(let j=0; j<numOfRooms;j++){
                 {
                     type: 'checkbox',
                     name: 'color',
-                    message: `What color would you like wall ${i+1} to be?`,
+                    message: `What color would you like wall ${i+1} to be? Use space bar to select/deselect`,
                     choices: ['red', 'yellow', 'orange', 'pink','blue','white','black','purple','green','brown']
                 },
                 {
@@ -111,6 +111,11 @@ for(let j=0; j<numOfRooms;j++){
             let height:number = wallInfo.length;
             let width:number = wallInfo.width;
             let color:string = wallInfo.color;
+
+            if (color==='' || color===null){
+                throw new Error("Color must be chosen")
+            }
+            
     
             let numOfObjects:number = wallInfo.numOfObjects;
             let counter: number = numOfObjects;
@@ -167,14 +172,14 @@ let littleGreenePriceList: {[key:string]:number} = {
     '2.5L':80
 }
 
-let graphenPriceList: {[key:number]:number} = {
+let graphenPriceList: {[key:string]:number} = {
     1:33,
     10:279
 }
                    
 
-let fb = new Paint("Farrow and Ball", fbPriceList, 12);
-let dulux = new Paint("Dulux", duluxPriceList, 16);
-let crown = new Paint("Crown", crownPriceList, 16);
-let littleGreene = new Paint("Little Greene", littleGreenePriceList, 14)
-let graphen = new Paint("Graphenstone", graphenPriceList, 18);
+let fb = new Paint("Farrow and Ball", fbPriceList,[2.5, 5], 12);
+let dulux = new Paint("Dulux", duluxPriceList,[2.5], 16);
+let crown = new Paint("Crown", crownPriceList,[1,5], 16);
+let littleGreene = new Paint("Little Greene", littleGreenePriceList,[1,2.5], 14)
+let graphen = new Paint("Graphenstone", graphenPriceList,[1,10], 18);
